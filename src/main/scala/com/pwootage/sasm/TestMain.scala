@@ -19,16 +19,17 @@
 
 package com.pwootage.sasm
 
-/**
- * ELF file definitions
- *
- * @author Pwootage
- */
-package object elf {
-  def main(args: Array[String]) {
-  }
-  class ELFHeader() {
-    val magic = 0x464C457f
+import java.nio.channels.FileChannel
+import java.nio.file.{StandardOpenOption, OpenOption, Paths}
 
+import com.pwootage.sasm.elf._
+
+object TestMain {
+  def main(args: Array[String]): Unit = {
+    val path = Paths.get("/Users/pwootage/vm-shared/test_clang")
+    val fc = FileChannel.open(path, StandardOpenOption.READ, StandardOpenOption.WRITE)
+    val bb = fc.map(FileChannel.MapMode.READ_WRITE, 0, fc.size())
+    val header = ELFHeader(bb)
+    println(header)
   }
 }
