@@ -17,19 +17,29 @@
  * along with SASM.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.pwootage.sasm
+package com.pwootage.sasm.elf
 
-import java.nio.channels.FileChannel
-import java.nio.file.{StandardOpenOption, OpenOption, Paths}
+import java.nio.ByteBuffer
 
-import com.pwootage.sasm.elf._
+/**
+ * An entire ELF File
+ */
+class ELFFile {
+  var header: ELFHeader = new ELFHeader()
+  var ph: Seq[ELFProgramHeader] = Seq()
+}
 
-object TestMain {
-  def main(args: Array[String]): Unit = {
-    val path = Paths.get("/Users/pwootage/vm-shared/kernel/out/pwkern-100")
-    val fc = FileChannel.open(path, StandardOpenOption.READ, StandardOpenOption.WRITE)
-    val bb = fc.map(FileChannel.MapMode.READ_WRITE, 0, fc.size())
-    val file = ELFFile(bb)
-    println(file)
+object ELFFile {
+  def apply(bb: ByteBuffer): ELFFile = {
+    val ret = new ELFFile()
+
+    bb.rewind()
+    ret.header = ELFHeader(bb)
+    ret.ph = for (i <- 0 to (ret.header.ph_num - 1)) yield {
+      bb.position((ret.header.phoff + i * ret.header.ph_size).toInt)
+      ELFProgramHeader(bb)(ret.header)
+    }
+
+    ret
   }
 }

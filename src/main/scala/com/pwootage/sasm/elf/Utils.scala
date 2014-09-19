@@ -17,19 +17,25 @@
  * along with SASM.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.pwootage.sasm
+package com.pwootage.sasm.elf
 
-import java.nio.channels.FileChannel
-import java.nio.file.{StandardOpenOption, OpenOption, Paths}
+import java.nio.ByteBuffer
+import ELFConstants._
 
-import com.pwootage.sasm.elf._
+/**
+ * Utilities used by other ELF classes
+ */
+private object Utils {
 
-object TestMain {
-  def main(args: Array[String]): Unit = {
-    val path = Paths.get("/Users/pwootage/vm-shared/kernel/out/pwkern-100")
-    val fc = FileChannel.open(path, StandardOpenOption.READ, StandardOpenOption.WRITE)
-    val bb = fc.map(FileChannel.MapMode.READ_WRITE, 0, fc.size())
-    val file = ELFFile(bb)
-    println(file)
+  /**
+   * Useful for getting the correct bitness of something
+   */
+  implicit class elfBuffer(bb: ByteBuffer) {
+    def getWord(implicit header: ELFHeader): Long = if (header.`class` == ELF_CLASS_32) {
+      bb.getInt
+    } else {
+      bb.getLong
+    }
   }
+
 }

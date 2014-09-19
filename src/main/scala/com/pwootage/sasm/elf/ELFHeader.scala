@@ -54,14 +54,7 @@ class ELFHeader() {
  * Helper object to load things
  */
 object ELFHeader {
-
-  private implicit class elfBuffer(bb: ByteBuffer) {
-    def getWord(implicit header: ELFHeader): Long = if (header.`class` == ELF_CLASS_32) {
-      bb.getInt
-    } else {
-      bb.getLong
-    }
-  }
+  import Utils._
 
   def apply(bb: ByteBuffer) = {
     implicit val header = new ELFHeader()

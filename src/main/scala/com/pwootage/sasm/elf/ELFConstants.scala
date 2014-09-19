@@ -249,4 +249,30 @@ object ELFConstants {
   val EM_MICROBLAZE: Short = 189
   /** Tilera TILE-Gx */
   val EM_TILEGX: Short = 191
+
+  // PH types
+  /** Program header table entry unused */
+  var PT_NULL = 0
+  /** Loadable program segment */
+  var PT_LOAD = 1
+  /** Dynamic linking information */
+  var PT_DYNAMIC = 2
+  /** Program interpreter */
+  var PT_INTERP = 3
+  /** Auxiliary information */
+  var PT_NOTE = 4
+  /** Reserved */
+  var PT_SHLIB = 5
+  /** Entry for header table itself */
+  var PT_PHDR = 6
+  /** Thread-local storage segment */
+  var PT_TLS = 7
+
+  // PH Flags (same as linux file perms!)
+  /** Executable */
+  var PF_X = 1 << 0
+  /** Writable */
+  var PF_W = 1 << 1
+  /** Readable */
+  var PF_R = 1 << 2
 }
