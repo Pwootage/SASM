@@ -48,7 +48,12 @@ OptionValues with Inside with Inspectors {
   }
 
   it should "escape anything in a quoted string" in {
-    val str = """this that 'the \o\t\h\e\r\ \'\\\n"""
-    split(str) should be (Seq("this", "that", "the other \'\\\n"))
+    val str = """this that 'the \o\t\h\e\r\;\ \'\\\n"""
+    split(str) should be (Seq("this", "that", "the other; \'\\\n"))
+  }
+
+  it should "ignore comments" in {
+    val str = "this that ;the other"
+    split(str) should be (Seq("this", "that"))
   }
 }

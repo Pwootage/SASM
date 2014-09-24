@@ -69,6 +69,7 @@ object AssemblerParser {
       var index = 0
       var str = ""
       var inString = false
+      var done = false
 
       def addStr(): Unit = {
         if (str.length > 0) {
@@ -77,7 +78,7 @@ object AssemblerParser {
         }
       }
 
-      while (index < line.length) {
+      while (!done && index < line.length) {
         val c = line(index)
         if (c == ',' || c == ' ' || c == '\t') {
           if (inString) {
@@ -103,6 +104,9 @@ object AssemblerParser {
             inString = true
             addStr()
           }
+        } else if (c == ';') {
+          //Comments!
+          done = true
         } else {
           str += c
         }
