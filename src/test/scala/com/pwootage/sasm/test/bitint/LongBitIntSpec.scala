@@ -28,13 +28,13 @@ class LongBitIntSpec extends BitIntSpec {
   it should "add" in {
     val a = $(3)
     val b = $(5)
-    (a + b).toLong should be(8)
+    (a + b).toLong should be (8)
   }
 
   it should "add and overflow correctly" in {
     val a = $(value = 15, bits = 4)
     val b = $(value = 4, bits = 4)
-    (a + b).toLong should be(3)
+    (a + b).toLong should be (3)
   }
 
   it should "subtract" in  {

@@ -40,13 +40,6 @@ package object assemblyBase {
   }
 
   /**
-   * An assembler directive - tells the assembler to do something
-   */
-  trait AssemblyDirective extends AssemblyValue {
-
-  }
-
-  /**
    * An assembly instruction - an actual instruction for the assembler
    */
   abstract class AssemblyInstruction(len: Int) extends AssemblyValue(len) {

@@ -20,9 +20,9 @@
 package com.pwootage.sasm.exceptions
 
 /**
- * Indicates that an unknown symbol was referenced
- *
- * @author Pwootage
- */
-class UnknownSymbolException(s: String) extends RuntimeException(s) {
-}
+  * Indicates that an unknown instruction was referenced
+  *
+  * @author Pwootage
+  */
+class UnknownInstructionException(s: String) extends RuntimeException(s) {
+ }

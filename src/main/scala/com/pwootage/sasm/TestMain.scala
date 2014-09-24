@@ -19,12 +19,10 @@
 
 package com.pwootage.sasm
 
-import java.io.FileOutputStream
-import java.nio.channels.FileChannel
-import java.nio.file.{StandardOpenOption, OpenOption, Paths}
+import java.io.{FileInputStream, FileReader, FileOutputStream}
 
-import com.pwootage.sasm.assemblyBase.{AssemblyAlign, SymbolLookupTable, AssemblyValue, AssemblyCodeBase}
-import com.pwootage.sasm.elf._
+import com.pwootage.sasm.assemblyBase.{AssemblyAlign, AssemblyCodeBase, AssemblyValue}
+import com.pwootage.sasm.welbornRISC.WelbornRISCParser
 
 object TestMain {
   def main(args: Array[String]): Unit = {
@@ -36,12 +34,19 @@ object TestMain {
 
     val res = AssemblyCodeBase.build { implicit code =>
       import com.pwootage.sasm.welbornRISC.WelbornRISC._
-      jmp('test1)
-      jmp('test2)
-      'test1 |;
-      code.add(AssemblyAlign(1024))
-      'test2 |;
-      jmr(R0)
+      val file = scala.io.Source.fromFile("test.s")
+      val src = file.getLines()
+      src.map(l => WelbornRISCParser.parseLine(l)).foreach(i => i.foreach(code.add))
+      file.close()
+      code.instructions.foreach(println)
+      Seq[AssemblyValue](
+        jmp('test1),
+        jmp('test2),
+        'test1,
+        AssemblyAlign(1024),
+        'test2,
+        jmr(R0)
+      )//.foreach(i => code.add(i))
     }
     val out = new FileOutputStream("test.bin")
     out.write(res.compile())
