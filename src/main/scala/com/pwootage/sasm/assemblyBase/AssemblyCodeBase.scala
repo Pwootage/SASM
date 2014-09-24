@@ -43,11 +43,9 @@ class AssemblyCodeBase(_instructions: Seq[AssemblyValue]) {
   private def pass1(lt: SymbolLookupTable): Unit = {
     var currentIndex = 0L
     for (v <- instructions) {
-      try {
-        v match {
-          case l: AssemblyLabel => lt.add(l.name, currentIndex)
-          case _ =>
-        }
+      v match {
+        case l: AssemblyLabel => lt.add(l.name, currentIndex)
+        case _ =>
       }
       currentIndex += v.length(currentIndex)
     }

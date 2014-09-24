@@ -20,7 +20,7 @@
 package com.pwootage.sasm.bitint
 
 /**
- * A implementation of BitInt based on [[Long]]. Note this means it is limited
+ * A implementation of BitInt based on a Long. Note this means it is limited
  * to 64 bits in length. This object also includes implicits to convert from
  * standard numeric types
  *
