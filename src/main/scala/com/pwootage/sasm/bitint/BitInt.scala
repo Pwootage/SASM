@@ -89,4 +89,9 @@ trait BitInt {
    */
   def toLong: Long
 
+  /**
+   * Retrieve up to the lowest 64 bits from this BitInt, signed correctly
+   */
+  def toSignedLong: Long
+
 }

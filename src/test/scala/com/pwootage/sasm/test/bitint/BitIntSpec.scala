@@ -1,3 +1,5 @@
+package com.pwootage.sasm.test.bitint
+
 /*
  * Copyright (c) 2014 Pwootage
  *
