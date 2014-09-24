@@ -19,17 +19,32 @@
 
 package com.pwootage.sasm
 
+import java.io.FileOutputStream
 import java.nio.channels.FileChannel
 import java.nio.file.{StandardOpenOption, OpenOption, Paths}
 
+import com.pwootage.sasm.assemblyBase.{AssemblyAlign, SymbolLookupTable, AssemblyValue, AssemblyCodeBase}
 import com.pwootage.sasm.elf._
 
 object TestMain {
   def main(args: Array[String]): Unit = {
-    val path = Paths.get("/Users/pwootage/vm-shared/kernel/out/pwkern-100")
-    val fc = FileChannel.open(path, StandardOpenOption.READ, StandardOpenOption.WRITE)
-    val bb = fc.map(FileChannel.MapMode.READ_WRITE, 0, fc.size())
-    val file = ELFFile(bb)
-    println(file)
+    //    val path = Paths.get("/Users/pwootage/vm-shared/kernel/out/pwkern-100")
+    //    val fc = FileChannel.open(path, StandardOpenOption.READ, StandardOpenOption.WRITE)
+    //    val bb = fc.map(FileChannel.MapMode.READ_WRITE, 0, fc.size())
+    //    val file = ELFFile(bb)
+    //    println(file)
+
+    val res = AssemblyCodeBase.build { implicit code =>
+      import com.pwootage.sasm.welbornRISC.WelbornRISC._
+      jmp('test1)
+      jmp('test2)
+      'test1 |;
+      code.add(AssemblyAlign(1024))
+      'test2 |;
+      jmr(R0)
+    }
+    val out = new FileOutputStream("test.bin")
+    out.write(res.compile())
+    out.close()
   }
 }
