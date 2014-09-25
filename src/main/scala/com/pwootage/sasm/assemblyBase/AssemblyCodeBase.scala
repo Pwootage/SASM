@@ -19,9 +19,6 @@
 
 package com.pwootage.sasm.assemblyBase
 
-import com.pwootage.sasm.exceptions.UnknownSymbolException
-import com.pwootage.sasm.welbornRISC.WelbornRISC.InstructionBase
-
 /**
  * A block of Assembly code. Not much of this class is particularly efficent,
  * but to be perfectly honest, it doesn't even matter.

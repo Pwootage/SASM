@@ -50,9 +50,9 @@ object AssembleMain {
              |
              |Options:
              |""".stripMargin)
-    val output = opt[String]("out", short = 'o', descr = "Output File", default = Some("out.bin"))
+    val output = opt[String]("out", short = 'o', descr = "Output File (default is stdout)", default = None)
     val dialect = opt[String]("format", short = 'f', descr = "ASM Dialect of input", required = true)
-    val verbose = toggle("verbose", short = 'v')
+    val verbose = toggle("verbose", short = 'v', default = Some(false))
     validate(dialect) { d =>
       if (Dialects.contains(d)) {
         Right(Unit)
@@ -108,8 +108,12 @@ object AssembleMain {
 
     sources.foreach(_.close())
 
-    val out = new FileOutputStream(conf.output())
+    val out = conf.output.get match {
+      case Some(x) => new FileOutputStream(x)
+      case None => System.out
+    }
     out.write(code.compile(verbose = conf.verbose()))
+    out.flush()
     out.close()
   }
 }
