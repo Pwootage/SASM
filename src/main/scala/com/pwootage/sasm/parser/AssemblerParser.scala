@@ -91,6 +91,12 @@ object AssemblerParser {
             val nc = line(index + 1)
             if (nc == 'n') {
               str += '\n'
+            } else if (nc == '0') {
+              str += '\0'
+            } else if (nc == 'x') {
+              val hex = line.substring(index + 2, index + 4)
+              str += Integer.parseInt(hex, 16).toChar
+              index += 2
             } else {
               str += nc
             }

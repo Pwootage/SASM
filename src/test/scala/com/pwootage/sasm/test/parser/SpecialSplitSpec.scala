@@ -56,4 +56,12 @@ OptionValues with Inside with Inspectors {
     val str = "this that ;the other"
     split(str) should be (Seq("this", "that"))
   }
+
+  it should "parse hex in strings to binary literals" in {
+    val str = "'\\xA5\\x5A'"
+    val s = split(str)
+    s(0).length should be (2)
+    s(0)(0) should be (0xA5)
+    s(0)(1) should be (0x5A)
+  }
 }
