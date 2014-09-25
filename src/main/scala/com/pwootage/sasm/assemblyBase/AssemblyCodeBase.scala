@@ -63,7 +63,7 @@ class AssemblyCodeBase(_instructions: Seq[AssemblyValue]) {
       val bin = v.toBinary(lt, currentIndex)
       if (verbose) {
         val binstring = bin.map(_.formatted("%02x")).fold("")(_ + _)
-        val padding = (0 to (2 - binstring.length / 4 + 1)).map(_ => "\t").fold("")(_ + _)
+        val padding = (0 to math.max(2 - binstring.length / 4 + 1, 1)).map(_ => "\t").fold("")(_ + _)
         println(s"${currentIndex.toHexString}\t${binstring}${padding}$v")
       }
       currentIndex += v.length(currentIndex)
