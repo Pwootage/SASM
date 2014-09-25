@@ -19,7 +19,6 @@
 
 package com.pwootage.sasm.assemblyBase
 
-import java.util
 import com.pwootage.sasm.exceptions.{DuplicateSymbolException, UnknownSymbolException}
 
 import scala.collection.mutable
@@ -46,4 +45,6 @@ class SymbolLookupTable {
   } else {
     map.put(symbol, addr)
   }
+
+  val foreach = map.foreach _
 }

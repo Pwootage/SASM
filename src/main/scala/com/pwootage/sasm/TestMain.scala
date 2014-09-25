@@ -33,26 +33,13 @@ object TestMain {
     //    println(file)
 
     val res = AssemblyCodeBase.build { implicit code =>
-      import com.pwootage.sasm.welbornRISC.WelbornRISC._
-      val file = scala.io.Source.fromFile("test.s")
+      val file = scala.io.Source.fromFile("/Users/pwootage/school/4380/wriscvm/test_files/count.s")
       val src = file.getLines()
       src.map(l => WelbornRISCParser.parseLine(l)).foreach(i => i.foreach(code.add))
       file.close()
-      code.instructions.foreach(println)
-      Seq[AssemblyValue](
-        jmp('test1),
-        jmp('test2),
-        'test1,
-        AssemblyAlign(1024),
-        'test2,
-        jmr(R0)
-      )//.foreach(i => code.add(i))
-
-      val InstructionBase(o,a,r1,r2,im) = add(R0, R1)
-      print(o,a,r1,r2,im);
     }
-    val out = new FileOutputStream("test.bin")
-    out.write(res.compile())
+    val out = new FileOutputStream("count.bin")
+    out.write(res.compile(verbose = true))
     out.close()
   }
 }

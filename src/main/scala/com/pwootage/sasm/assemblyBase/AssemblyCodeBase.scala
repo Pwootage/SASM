@@ -20,6 +20,7 @@
 package com.pwootage.sasm.assemblyBase
 
 import com.pwootage.sasm.exceptions.UnknownSymbolException
+import com.pwootage.sasm.welbornRISC.WelbornRISC.InstructionBase
 
 /**
  * A block of Assembly code. Not much of this class is particularly efficent,
@@ -36,28 +37,35 @@ class AssemblyCodeBase(_instructions: Seq[AssemblyValue]) {
 
   override def toString = instructions.toString()
 
-  def compile(): Array[Byte] = {
+  def compile(verbose: Boolean = false): Array[Byte] = {
     val lt = new SymbolLookupTable()
-    pass1(lt)
-    pass2(lt)
+    pass1(lt, verbose)
+    if (verbose) lt.foreach(println)
+    pass2(lt, verbose)
   }
 
-  private def pass1(lt: SymbolLookupTable): Unit = {
+  private def pass1(lt: SymbolLookupTable, verbose: Boolean): Unit = {
     var currentIndex = 0L
     for (v <- instructions) {
       v match {
         case l: AssemblyLabel => lt.add(l.name, currentIndex)
         case _ =>
       }
+//      println(s"${currentIndex.toHexString}\t $v")
       currentIndex += v.length(currentIndex)
     }
   }
 
-  private def pass2(lt: SymbolLookupTable): Array[Byte] = {
+  private def pass2(lt: SymbolLookupTable, verbose: Boolean): Array[Byte] = {
     //Probably not uber-efficent but it doesn't matter :)
     var currentIndex = 0L
     (for (v <- instructions) yield {
       val bin = v.toBinary(lt, currentIndex)
+      if (verbose) {
+        val binstring = bin.map(_.formatted("%02x")).fold("")(_ + _)
+        val padding = (0 to 3 - (binstring.length / 4)).map(_ => "\t").fold("")(_ + _)
+        println(s"${currentIndex.toHexString}\t${binstring}${padding}$v")
+      }
       currentIndex += v.length(currentIndex)
       bin
     }).fold(Array())(_ ++ _)
