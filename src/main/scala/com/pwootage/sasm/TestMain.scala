@@ -47,6 +47,9 @@ object TestMain {
         'test2,
         jmr(R0)
       )//.foreach(i => code.add(i))
+
+      val InstructionBase(o,a,r1,r2,im) = add(R0, R1)
+      print(o,a,r1,r2,im);
     }
     val out = new FileOutputStream("test.bin")
     out.write(res.compile())
