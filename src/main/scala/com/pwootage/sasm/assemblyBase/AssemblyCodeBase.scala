@@ -32,6 +32,8 @@ class AssemblyCodeBase(_instructions: Seq[AssemblyValue]) {
 
   def add(v: AssemblyValue): Unit = instructions = instructions :+ v
 
+  def add(v: Seq[AssemblyValue]): Unit = instructions = instructions ++ v
+
   override def toString = instructions.toString()
 
   def compile(): Array[Byte] = {
