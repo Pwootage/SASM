@@ -23,6 +23,7 @@ import java.io.{FileInputStream, FileReader, FileOutputStream}
 
 import com.pwootage.sasm.assemblyBase.{AssemblyAlign, AssemblyCodeBase, AssemblyValue}
 import com.pwootage.sasm.welbornRISC.WelbornRISCParser
+import com.pwootage.sasm.welbornRISC.WelbornRISC._
 
 object TestMain {
   def main(args: Array[String]): Unit = {
@@ -31,6 +32,11 @@ object TestMain {
     //    val bb = fc.map(FileChannel.MapMode.READ_WRITE, 0, fc.size())
     //    val file = ELFFile(bb)
     //    println(file)
+
+    val ins = adi(R0, -1234567)
+    val insArr = ins.toBinary(null, 0)
+    val insLong = (0 to 7).map(i => (insArr(i).toLong & 0xFF) << (i * 8)).fold(0.toLong)(_ | _)
+    val ins2 = InstructionBase.fromLong(insLong)
 
     val res = AssemblyCodeBase.build { implicit code =>
       val file = scala.io.Source.fromFile("/Users/pwootage/school/4380/wriscvm/test_files/count.s")
