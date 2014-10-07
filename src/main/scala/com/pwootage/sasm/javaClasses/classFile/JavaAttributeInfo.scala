@@ -17,18 +17,13 @@
  * along with SASM.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.pwootage.sasm.java.classFile
+package com.pwootage.sasm.javaClasses.classFile
 
 /**
- * Represents a java method
+ * Attributes for methods, fields, classes
  *
  * @author Pwootage
  */
-class JavaMethodInfo(
-                      val access_flags: Short,
-                      val name_index: Short,
-                      val descriptor_index: Short,
-                      val attributes: Array[JavaAttributeInfo]
-                      ) {
+class JavaAttributeInfo {
 
 }

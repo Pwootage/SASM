@@ -17,9 +17,9 @@
  * along with SASM.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.pwootage.sasm.java.classFile
+package com.pwootage.sasm.javaClasses.classFile
 
-import com.pwootage.sasm.java.classFile.JavaClassConstants.JavaClassConstant
+import com.pwootage.sasm.javaClasses.classFile.JavaClassConstants.JavaClassConstant
 
 /**
  * Represents a java class in binary form.

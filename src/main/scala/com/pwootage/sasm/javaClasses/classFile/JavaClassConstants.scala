@@ -17,7 +17,7 @@
  * along with SASM.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.pwootage.sasm.java.classFile
+package com.pwootage.sasm.javaClasses.classFile
 
 /**
  * Contains classes that represent constants within a java class file
