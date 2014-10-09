@@ -19,6 +19,9 @@
 
 package com.pwootage.sasm.javaClasses.classFile
 
+import java.io.InputStream
+
+import com.pwootage.sasm.javaClasses.classFile.JavaAttributes.JavaAttributeInfo
 import com.pwootage.sasm.javaClasses.classFile.JavaClassConstants.JavaClassConstant
 
 /**
@@ -28,17 +31,15 @@ import com.pwootage.sasm.javaClasses.classFile.JavaClassConstants.JavaClassConst
  */
 class JavaClass {
   val magic: Int = 0xCAFEBABE
-  val minor_version: Short = 0
-  val major_version: Short = 52
+  var minor_version: Short = 0
+  var major_version: Short = 52
 
-  def constant_pool_count: Short = constant_pool.length.toShort
-
-  val constant_pool: Array[JavaClassConstant] = Array()
-  val access_flags: Short = 0
-  val this_class: Short = 1
-  val super_class: Short = 0
-  val interfaces: Array[Short] = Array()
-  val fields: Array[JavaFieldInfo] = Array()
-  val methods: Array[JavaMethodInfo] = Array()
-//  val attributes: Array
+  var constant_pool: Array[JavaClassConstant] = Array()
+  var access_flags: Short = 0
+  var this_class: Short = 1
+  var super_class: Short = 0
+  var interfaces: Array[Short] = Array()
+  var fields: Array[JavaFieldInfo] = Array()
+  var methods: Array[JavaMethodInfo] = Array()
+  var attributes: Array[JavaAttributeInfo] = Array()
 }

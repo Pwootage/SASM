@@ -19,16 +19,19 @@
 
 package com.pwootage.sasm.javaClasses.classFile
 
+import com.pwootage.sasm.javaClasses.classFile.JavaAttributes.JavaAttributeInfo
+
 /**
  * Represents a java method
  *
  * @author Pwootage
  */
-class JavaMethodInfo(
-                      val access_flags: Short,
-                      val name_index: Short,
-                      val descriptor_index: Short,
-                      val attributes: Array[JavaAttributeInfo]
-                      ) {
+class JavaMethodInfo
+(
+  val access_flags: Short,
+  val name: String,
+  val descriptor: String,
+  val attributes: Array[JavaAttributeInfo]
+  ) {
 
 }
