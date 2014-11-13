@@ -57,14 +57,19 @@ class AssemblyCodeBase(_instructions: Seq[AssemblyValue]) {
     //Probably not uber-efficent but it doesn't matter :)
     var currentIndex = 0L
     (for (v <- instructions) yield {
-      val bin = v.toBinary(lt, currentIndex)
-      if (verbose) {
-        val binstring = bin.map(_.formatted("%02x")).fold("")(_ + _)
-        val padding = (0 to math.max(2 - binstring.length / 4 + 1, 1)).map(_ => "\t").fold("")(_ + _)
-        println(s"${currentIndex.toHexString}\t${binstring}${padding}$v")
+      try {
+        val bin = v.toBinary(lt, currentIndex)
+        if (verbose) {
+          val binstring = bin.map(_.formatted("%02x")).fold("")(_ + _)
+          val padding = (0 to math.max(2 - binstring.length / 4 + 1, 1)).map(_ => "\t").fold("")(_ + _)
+          println(s"${currentIndex.toHexString}\t${binstring}${padding}$v")
+        }
+        currentIndex += v.length(currentIndex)
+        bin
+      } catch {
+        case e:Throwable =>
+          throw new Error(s"Error processing instruction $v", e)
       }
-      currentIndex += v.length(currentIndex)
-      bin
     }).fold(Array())(_ ++ _)
   }
 }
