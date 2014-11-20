@@ -228,4 +228,11 @@ object PwisaConstants {
     }
   }
 
+  trait AssemblyMode
+  object AssemblyMode {
+    case object Mode0 extends AssemblyMode
+    case object Mode1 extends AssemblyMode
+    case object Mode2 extends AssemblyMode
+    case object Mode3 extends AssemblyMode
+  }
 }
