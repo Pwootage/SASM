@@ -29,10 +29,10 @@ import PwisaConstants.Masks._
 object PwisaInstructions {
 
   private def intToArray(v: Int) = Array[Byte](
-    (v >> 24).toByte,
-    (v >> 16).toByte,
-    (v >> 8).toByte,
-    v.toByte
+    ((v >> 0) & 0xFF).toByte,
+    ((v >> 8) & 0xFF).toByte,
+    ((v >> 16) & 0xFF).toByte,
+    ((v >> 24) & 0xFF).toByte
   )
 
   case class PwisaInstruction(mode: AssemblyMode,
