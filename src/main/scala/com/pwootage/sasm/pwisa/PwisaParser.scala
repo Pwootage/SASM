@@ -98,7 +98,11 @@ object PwisaParser extends AssemblerDialectBase {
     "divf" -> mode1.dab(0x15, 0x3),
     "ftoi" -> mode1.dab(0x15, 0x4),
     "itof" -> mode1.dab(0x15, 0x5),
-    "sqrt" -> mode1.dab(0x15, 0x6)
+    "sqrt" -> mode1.dab(0x15, 0x6),
+    //Stack
+    "push" -> mode3(0x16),
+    "pop" -> mode3(0x17),
+    "peek" -> mode3(0x18)
   )
 
   val directives = Map[String, Seq[String] => Seq[AssemblyValue]](
