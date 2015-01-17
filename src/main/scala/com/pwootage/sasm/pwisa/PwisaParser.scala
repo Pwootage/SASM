@@ -44,9 +44,11 @@ object PwisaParser extends AssemblerDialectBase {
 
   override def instruction(split: Seq[String]): Seq[AssemblyValue] = {
     val instr = split(0).toLowerCase
-    instructions.get(instr) match {
+    try instructions.get(instr) match {
       case Some(x) => Seq(x(split.slice(1, split.length)))
       case None => throw new UnknownInstructionException(instr)
+    } catch {
+      case e:Exception => throw new Exception("Failed to parse instruction: " + split, e)
     }
   }
 
@@ -176,6 +178,7 @@ object PwisaParser extends AssemblerDialectBase {
     case "P5" => P5
     case "P6" => P6
     case "P7" => P7
+    case "RV" => RV
     case "LR" => LR
     case "SP" => SP
     case "FP" => FP
