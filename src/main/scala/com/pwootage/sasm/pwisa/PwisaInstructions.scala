@@ -36,16 +36,19 @@ object PwisaInstructions {
   )
 
   case class PwisaInstruction(mode: AssemblyMode,
-                             opcode: Int,
-                             regD: Int = 0,
-                             regA: Int = 0,
-                             regB: Int = 0,
-                             subcode: Int = 0,
-                             immediate: Either[Int, String] = Left(0)) extends AssemblyInstruction(4) {
+                              opcode: Int,
+                              regD: Int = 0,
+                              regA: Int = 0,
+                              regB: Int = 0,
+                              subcode: Int = 0,
+                              immediate: Either[Int, String] = Left(0),
+                              ls2: Boolean = false) extends AssemblyInstruction(4) {
     private def imm(implicit lut: SymbolLookupTable) = immediate match {
       case Left(x) => x
-      case Right(x) => lut.lookup(x).toInt //Truncates... which is fine, >2gb text is unlikely (and probably will crash)
+      //Truncates... which is fine, >2gb text is unlikely (and probably will crash)
+      case Right(x) => (lut.lookup(x) >> (if (ls2) 2 else 0)).toInt
     }
+
     override def toBinary(lookup: SymbolLookupTable, address: Long): Array[Byte] = {
       implicit val lut = lookup
       val intVal = mode match {

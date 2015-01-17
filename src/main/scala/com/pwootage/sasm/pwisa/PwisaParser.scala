@@ -89,10 +89,10 @@ object PwisaParser extends AssemblerDialectBase {
     "sfle" -> mode1.dab(0x10, 0x3),
     "sfgt" -> mode1.dab(0x10, 0x4),
     "sfge" -> mode1.dab(0x10, 0x5),
-    "bf" -> mode3(0x11),
-    "bnf" -> mode3(0x12),
-    "j" -> mode3(0x13),
-    "jal" -> mode3(0x14),
+    "bf" -> mode3sl2(0x11),
+    "bnf" -> mode3sl2(0x12),
+    "j" -> mode3sl2(0x13),
+    "jal" -> mode3sl2(0x14),
     //FP
     "addf" -> mode1.dab(0x15, 0x0),
     "subf" -> mode1.dab(0x15, 0x1),
@@ -239,6 +239,16 @@ object PwisaParser extends AssemblerDialectBase {
       opcode = opcode,
       regD = getReg(split(0)),
       immediate = getImmed(split(1))
+    )
+  }
+
+  def mode3sl2(opcode: Int)(split: Seq[String]) = {
+    PwisaInstruction(
+      mode = Mode3,
+      opcode = opcode,
+      regD = getReg(split(0)),
+      immediate = getImmed(split(1)),
+      ls2 = true
     )
   }
 
