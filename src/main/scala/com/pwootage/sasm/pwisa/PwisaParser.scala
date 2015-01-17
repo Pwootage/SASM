@@ -83,12 +83,12 @@ object PwisaParser extends AssemblerDialectBase {
     "sb" -> mode2(0xE),
     "sspr" -> mode2(0xF),
     //Branch
-    "sfeq" -> mode1.dab(0x10, 0x0),
-    "sfneq" -> mode1.dab(0x10, 0x1),
-    "sflt" -> mode1.dab(0x10, 0x2),
-    "sfle" -> mode1.dab(0x10, 0x3),
-    "sfgt" -> mode1.dab(0x10, 0x4),
-    "sfge" -> mode1.dab(0x10, 0x5),
+    "sfeq" -> mode1.ab(0x10, 0x0),
+    "sfneq" -> mode1.ab(0x10, 0x1),
+    "sflt" -> mode1.ab(0x10, 0x2),
+    "sfle" -> mode1.ab(0x10, 0x3),
+    "sfgt" -> mode1.ab(0x10, 0x4),
+    "sfge" -> mode1.ab(0x10, 0x5),
     "bf" -> mode3sl2(0x11),
     "bnf" -> mode3sl2(0x12),
     "j" -> mode3sl2(0x13),
@@ -218,6 +218,16 @@ object PwisaParser extends AssemblerDialectBase {
         regD = getReg(split(0)),
         regA = getReg(split(1)),
         regB = getReg(split(2)),
+        subcode = subcode
+      )
+    }
+
+    def ab(opcode: Int, subcode: Int)(split: Seq[String]) = {
+      PwisaInstruction(
+        mode = Mode1,
+        opcode = opcode,
+        regA = getReg(split(0)),
+        regB = getReg(split(1)),
         subcode = subcode
       )
     }
