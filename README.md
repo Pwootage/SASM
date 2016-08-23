@@ -7,7 +7,7 @@ but also the assembly code itself.
 
 - ASM implementations
     - x86_64
-    - Whatever it is I need to write for my 4380 class
+    - PWISA
 - Executable format support
     - ELF executable
     - ELF object

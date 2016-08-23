@@ -24,7 +24,6 @@ import java.nio.file.Paths
 
 import com.pwootage.sasm.assemblyBase.AssemblyCodeBase
 import com.pwootage.sasm.pwisa.PwisaParser
-import com.pwootage.sasm.welbornRISC.WelbornRISCParser
 import org.rogach.scallop._
 import org.rogach.scallop.exceptions.{ScallopException, Exit, RequiredOptionNotFound}
 
@@ -64,9 +63,8 @@ object AssembleMain {
     val files = trailArg[List[String]]("files", descr = "Files to compile", required = true)
   }
 
-  val DialectWRISC = "wrisc"
   val DialectPwisa = "pwisa"
-  val Dialects = Seq(DialectWRISC, DialectPwisa)
+  val Dialects = Seq(DialectPwisa)
 
   def main(args: Array[String]) {
     val conf = new CmdArgConf(args)
@@ -96,7 +94,6 @@ object AssembleMain {
     }
 
     val parse = conf.dialect() match {
-      case DialectWRISC => WelbornRISCParser.parseLine _
       case DialectPwisa => PwisaParser.parseLine _
     }
 
